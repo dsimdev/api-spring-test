@@ -30,6 +30,13 @@ public class Usuario implements UserDetails {
 
     @NotNull
     private String perfil;
+
+    @Column(name = "fecha_inicio")
+    private String fechaInicio;
+
+    @Column(name = "creado_por")
+    private String creadoPor;
+
     private boolean enabled = true;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
@@ -45,6 +52,18 @@ public class Usuario implements UserDetails {
         this.password = password;
         this.email = email;
         this.perfil = perfil;
+        this.enabled = enabled;
+        this.usuarioRoles = usuarioRoles;
+    }
+
+    public Usuario(long id, String username, String password, String email, String perfil, String fechaInicio, String creadoPor, boolean enabled, Set<UsuarioRol> usuarioRoles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.perfil = perfil;
+        this.fechaInicio = fechaInicio;
+        this.creadoPor = creadoPor;
         this.enabled = enabled;
         this.usuarioRoles = usuarioRoles;
     }
@@ -132,5 +151,21 @@ public class Usuario implements UserDetails {
             this.usuarioRoles.retainAll(usuarioRoles);
             this.usuarioRoles.addAll(usuarioRoles);
         }
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
     }
 }

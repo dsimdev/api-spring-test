@@ -1,9 +1,7 @@
 package com.dsimdev.api.test.controllers;
 
 import com.dsimdev.api.test.entities.Distribuidora;
-import com.dsimdev.api.test.entities.DistribuidoraResponse;
 import com.dsimdev.api.test.services.DistribuidoraService;
-import com.dsimdev.api.test.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -23,11 +22,8 @@ public class DistribuidoraController {
     private DistribuidoraService distribuidoraService;
 
     @GetMapping
-    public DistribuidoraResponse listarDistribuidoras(@RequestParam(value = "pageNo", defaultValue = Constants.NO_PAGE_DEFAULT, required = false) int pageNo,
-                                                      @RequestParam(value = "pageSize", defaultValue = Constants.SIZE_PAGE_DEFAULT, required = false) int pageSize,
-                                                      @RequestParam(value = "orderBy", defaultValue = Constants.ORDER_BY_DEFAULT, required = false) String orderBy,
-                                                      @RequestParam(value = "sortBy", defaultValue = Constants.SORT_BY_DEFAULT, required = false) String sortBy) {
-        return distribuidoraService.obtenerTodasLasDistribuidoras(pageNo, pageSize, orderBy, sortBy);
+    public List<Distribuidora> listarDistribuidoras() {
+        return distribuidoraService.obtenerDistribuidoras();
     }
 
     @GetMapping("/{codigoInterno}")

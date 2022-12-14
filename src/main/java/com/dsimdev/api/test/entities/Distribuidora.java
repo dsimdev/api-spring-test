@@ -51,6 +51,10 @@ public class Distribuidora {
 
     @Column(name = "actualizado_por")
     private String actualizadoPor;
+
+    @Column(name = "vendedor")
+    private String vendedor;
+
     @OneToMany(mappedBy = "distribuidora", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comentario> comentarios = new HashSet<>();
 
@@ -101,7 +105,7 @@ public class Distribuidora {
         this.modulos = modulos;
     }
 
-    public Distribuidora(long id, long codigoInterno, String base, String razonSocial, String erp, String multinacional, String estado, String fechaInicio, String creadoPor, String fechaActualizacion, String actualizadoPor, Set<Comentario> comentarios, Set<Contacto> contactos, Set<Modulo> modulos) {
+    public Distribuidora(long id, long codigoInterno, String base, String razonSocial, String erp, String multinacional, String estado, String fechaInicio, String creadoPor, String fechaActualizacion, String actualizadoPor, Set<Comentario> comentarios, Set<Contacto> contactos, Set<Modulo> modulos, String vendedor) {
         this.id = id;
         this.codigoInterno = codigoInterno;
         this.base = base;
@@ -116,6 +120,7 @@ public class Distribuidora {
         this.comentarios = comentarios;
         this.contactos = contactos;
         this.modulos = modulos;
+        this.vendedor = vendedor;
     }
 
     public long getId() {
@@ -243,5 +248,13 @@ public class Distribuidora {
 
     public void setActualizadoPor(String actualizadoPor) {
         this.actualizadoPor = actualizadoPor;
+    }
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
     }
 }

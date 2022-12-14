@@ -1,14 +1,14 @@
 package com.dsimdev.api.test.services;
 
 import com.dsimdev.api.test.entities.Distribuidora;
-import com.dsimdev.api.test.entities.DistribuidoraResponse;
+
+import java.util.List;
 
 public interface DistribuidoraService {
 
     public Distribuidora crearDistribuidora(Distribuidora distribuidora);
 
-    public DistribuidoraResponse obtenerTodasLasDistribuidoras(int pageNo, int pageSize, String orderBy, String sortBy);
-
+    public List<Distribuidora> obtenerDistribuidoras();
     public Distribuidora obtenerDistribuidoraById(long id);
 
     public Distribuidora obtenerDistribuidoraByCodigoInterno(long codigoInterno);
