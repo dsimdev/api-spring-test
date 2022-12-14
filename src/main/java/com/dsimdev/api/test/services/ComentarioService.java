@@ -13,4 +13,6 @@ public interface ComentarioService {
     public Comentario obtenerComentarioPorId(Long distribuidoraId, Long comentarioId);
 
     public Comentario actualizarComentario(Long distribuidoraId, Long comentarioId, Comentario comentarioRequest);
+
+    public void eliminarComentario(Long comentarioId);
 }

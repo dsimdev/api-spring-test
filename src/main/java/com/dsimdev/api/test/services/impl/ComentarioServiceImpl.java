@@ -51,9 +51,17 @@ public class ComentarioServiceImpl implements ComentarioService {
         Comentario comentario = buscarComentarioYDistribuidora(distribuidoraId, comentarioId);
         comentario.setUsuario(comentarioRequest.getUsuario());
         comentario.setMensaje(comentarioRequest.getMensaje());
+        comentario.setFechaInicio(comentarioRequest.getFechaInicio());
+        comentario.setCreadoPor(comentario.getCreadoPor());
 
         Comentario comentarioActualizado = comentarioRepository.save(comentario);
         return comentarioActualizado;
+    }
+
+    @Override
+    public void eliminarComentario(Long comentarioId) {
+        Comentario comentario = comentarioRepository.findById(comentarioId).orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
+        comentarioRepository.delete(comentario);
     }
 
     private Comentario buscarComentarioYDistribuidora(Long distribuidoraId, Long comentarioId) {

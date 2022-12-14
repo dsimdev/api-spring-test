@@ -7,8 +7,9 @@ import com.dsimdev.api.test.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import javax.validation.Valid;
 
@@ -34,21 +35,19 @@ public class DistribuidoraController {
         return ResponseEntity.ok(distribuidoraService.obtenerDistribuidoraByCodigoInterno(codigoInterno));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Distribuidora> guardarDistribuidora(@Valid @RequestBody Distribuidora distribuidora) {
         return new ResponseEntity<>(distribuidoraService.crearDistribuidora(distribuidora), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Distribuidora> actualizarDistribuidora(@Valid @RequestBody Distribuidora distribuidora, @PathVariable(name = "id") long id) {
         Distribuidora distribuidoraResponse = distribuidoraService.actualizarDistribuidora(distribuidora, id);
         return new ResponseEntity<>(distribuidoraResponse, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('SYS', 'ADMIN')")
     public ResponseEntity<String> eliminarDistribuidora(@PathVariable(name = "id") long id) {
         distribuidoraService.eliminarDistribuidora(id);
         return new ResponseEntity<>("Distribuidora eliminada con exito", HttpStatus.OK);

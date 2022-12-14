@@ -14,5 +14,6 @@ public interface ModuloService {
 
     public Modulo actualizarModulo(Long distribuidoraId, Long moduloId, Modulo moduloRequest);
 
+    public void eliminarModulo(Long moduloId);
 
 }

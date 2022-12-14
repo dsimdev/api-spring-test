@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,13 +51,28 @@ public class ModuloServiceImpl implements ModuloService {
     @Override
     public Modulo actualizarModulo(Long distribuidoraId, Long moduloId, Modulo moduloRequest) {
         Modulo modulo = buscarModuloYDistribuidora(distribuidoraId, moduloId);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+
         modulo.setNombre(moduloRequest.getNombre());
         modulo.setEstado(moduloRequest.getEstado());
         modulo.setFechaFin(moduloRequest.getFechaFin());
+        modulo.setFechaInicio(moduloRequest.getFechaInicio());
+        modulo.setCreadoPor(modulo.getCreadoPor());
+        modulo.setActualizadoPor(modulo.getActualizadoPor());
+        modulo.setFechaActualizacion(dateFormat.format(date));
 
         Modulo moduloActualizado = moduloRepository.save(modulo);
         return moduloActualizado;
     }
+
+    @Override
+    public void eliminarModulo(Long moduloId) {
+        Modulo modulo = moduloRepository.findById(moduloId).orElseThrow(() -> new ResourceNotFoundException("Modulo", "id", moduloId));
+        moduloRepository.delete(modulo);
+    }
+
 
     private Modulo buscarModuloYDistribuidora(Long distribuidoraId, Long moduloId) {
         Distribuidora distribuidora = distribuidoraRepository.findById(distribuidoraId).orElseThrow(() -> new ResourceNotFoundException("Distribuidora", "id", distribuidoraId));

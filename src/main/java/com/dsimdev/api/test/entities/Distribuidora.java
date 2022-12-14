@@ -1,6 +1,7 @@
 package com.dsimdev.api.test.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,29 +17,40 @@ public class Distribuidora {
     private long id;
 
     @Column(name = "codigo_interno", nullable = false)
+    @NotNull
     private long codigoInterno;
 
     @Column(name = "base", nullable = false)
+    @NotNull
     private String base;
 
-    @Column(name = "razon_social")
+    @Column(name = "razon_social", nullable = false)
+    @NotNull
     private String razonSocial;
 
-    @Column(name = "erp")
+    @Column(name = "erp", nullable = false)
+    @NotNull
     private String erp;
 
-    @Column(name = "multinacional")
+    @Column(name = "multinacional", nullable = false)
+    @NotNull
     private String multinacional;
 
-    @Column(name = "estado")
+    @Column(name = "estado", nullable = false)
+    @NotNull
     private String estado;
 
     @Column(name = "fecha_inicio")
     private String fechaInicio;
 
+    @Column(name = "creado_por")
+    private String creadoPor;
+
     @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
 
+    @Column(name = "actualizado_por")
+    private String actualizadoPor;
     @OneToMany(mappedBy = "distribuidora", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comentario> comentarios = new HashSet<>();
 
@@ -84,6 +96,23 @@ public class Distribuidora {
         this.estado = estado;
         this.fechaInicio = fechaInicio;
         this.fechaActualizacion = fechaActualizacion;
+        this.comentarios = comentarios;
+        this.contactos = contactos;
+        this.modulos = modulos;
+    }
+
+    public Distribuidora(long id, long codigoInterno, String base, String razonSocial, String erp, String multinacional, String estado, String fechaInicio, String creadoPor, String fechaActualizacion, String actualizadoPor, Set<Comentario> comentarios, Set<Contacto> contactos, Set<Modulo> modulos) {
+        this.id = id;
+        this.codigoInterno = codigoInterno;
+        this.base = base;
+        this.razonSocial = razonSocial;
+        this.erp = erp;
+        this.multinacional = multinacional;
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+        this.creadoPor = creadoPor;
+        this.fechaActualizacion = fechaActualizacion;
+        this.actualizadoPor = actualizadoPor;
         this.comentarios = comentarios;
         this.contactos = contactos;
         this.modulos = modulos;
@@ -198,5 +227,21 @@ public class Distribuidora {
             this.modulos.retainAll(modulos);
             this.modulos.addAll(modulos);
         }
+    }
+
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
+    }
+
+    public String getActualizadoPor() {
+        return actualizadoPor;
+    }
+
+    public void setActualizadoPor(String actualizadoPor) {
+        this.actualizadoPor = actualizadoPor;
     }
 }

@@ -14,5 +14,5 @@ public interface ContactoService {
 
     public Contacto actualizarContacto(Long distribuidoraId, Long contactoId, Contacto conctactoRequest);
 
-
+    public void eliminarContacto(Long moduloId);
 }

@@ -83,6 +83,8 @@ public class DistribuidoraServiceImpl implements DistribuidoraService {
         distribuidora.setFechaInicio(distribuidoraDto.getFechaInicio());
         distribuidora.setFechaActualizacion(dateFormat.format(date));
         distribuidora.setMultinacional(distribuidoraDto.getMultinacional());
+        distribuidora.setCreadoPor(distribuidoraDto.getCreadoPor());
+        distribuidora.setActualizadoPor(distribuidoraDto.getActualizadoPor());
 
         Distribuidora distribuidoraActualizada = distribuidoraRepository.save(distribuidora);
         return distribuidoraActualizada;

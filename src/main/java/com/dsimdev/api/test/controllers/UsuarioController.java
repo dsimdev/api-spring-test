@@ -6,6 +6,7 @@ import com.dsimdev.api.test.entities.UsuarioRol;
 import com.dsimdev.api.test.services.UsuarioService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class UsuarioController {
     public Usuario obtenerUsuario(@PathVariable(value = "username") String username) {
         return usuarioService.obtenerUsuario(username);
     }
-
+    @PreAuthorize("hasRole('SYS')")
     @PostMapping
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception {
         usuario.setPerfil("default.png");
@@ -45,7 +46,7 @@ public class UsuarioController {
 
         Rol rol = new Rol();
         rol.setId(3L);
-        rol.setNombre("USER");
+        rol.setNombre("ROLE_USER");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
@@ -55,6 +56,7 @@ public class UsuarioController {
         return usuarioService.guardarUsuario(usuario, usuarioRoles);
     }
 
+    @PreAuthorize("hasRole('SYS')")
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable(value = "usuarioId") long usuarioId){
         usuarioService.eliminarUsuario(usuarioId);

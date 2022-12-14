@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,12 +52,26 @@ public class ContactoServiceImpl implements ContactoService {
     @Override
     public Contacto actualizarContacto(Long distribuidoraId, Long contactoId, Contacto conctactoRequest) {
         Contacto contacto = buscarContactoYDistribuidora(distribuidoraId, contactoId);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+
         contacto.setNombre(conctactoRequest.getNombre());
         contacto.setTelefono(conctactoRequest.getTelefono());
         contacto.setEmail(conctactoRequest.getEmail());
+        contacto.setActualizadoPor(conctactoRequest.getActualizadoPor());
+        contacto.setFechaActualizacion(dateFormat.format(date));
+        contacto.setFechaInicio(conctactoRequest.getFechaInicio());
+        contacto.setCreadoPor(conctactoRequest.getCreadoPor());
 
         Contacto contactoActualizado = contactoRepository.save(contacto);
         return contactoActualizado;
+    }
+
+    @Override
+    public void eliminarContacto(Long contactoId) {
+        Contacto contacto = contactoRepository.findById(contactoId).orElseThrow(() -> new ResourceNotFoundException("Contacto", "id", contactoId));
+        contactoRepository.delete(contacto);
     }
 
 

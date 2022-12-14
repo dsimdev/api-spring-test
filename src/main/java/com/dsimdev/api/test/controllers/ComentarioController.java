@@ -30,17 +30,22 @@ public class ComentarioController {
         return new ResponseEntity<>(comentario, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{distribuidoraId}/comentarios")
     public ResponseEntity<Comentario> guardarComentario(@PathVariable(value = "ditribuidoraId") Long distribuidoraId, @Valid @RequestBody Comentario comentario) {
         return new ResponseEntity<>(comentarioService.crearComentario(distribuidoraId, comentario), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{distribuidoraId}/comentarios/{comentarioId}")
     public ResponseEntity<Comentario> actualizarComentario(@PathVariable(value = "distribuidoraId") Long distribuidoraId, @PathVariable(value = "comentarioId") Long comentarioId, @Valid @RequestBody Comentario comentario) {
         Comentario comentarioDtoActualizado = comentarioService.actualizarComentario(distribuidoraId, comentarioId, comentario);
         return new ResponseEntity<>(comentarioDtoActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{distribuidoraId}/comentarios/{comentarioId}")
+    @PreAuthorize("hasAnyRole('SYS', 'ADMIN')")
+    public ResponseEntity<String> eliminarContacto(@PathVariable(name = "comentarioId") long id) {
+        comentarioService.eliminarComentario(id);
+        return new ResponseEntity<>("Comentario eliminada con exito", HttpStatus.OK);
     }
 
 }

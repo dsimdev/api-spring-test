@@ -30,17 +30,22 @@ public class ContactoController {
         return new ResponseEntity<>(contacto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{distribuidoraId}/contactos")
     public ResponseEntity<Contacto> guardarContacto(@PathVariable(value = "ditribuidoraId") Long distribuidoraId, @Valid @RequestBody Contacto contacto) {
         return new ResponseEntity<>(contactoService.crearContacto(distribuidoraId, contacto), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{distribuidoraId}/contactos/{contactoId}")
     public ResponseEntity<Contacto> actualizarContacto(@PathVariable(value = "distribuidoraId") Long distribuidoraId, @PathVariable(value = "comentarioId") Long contactoId, @Valid @RequestBody Contacto contacto) {
         Contacto contactoActualizado = contactoService.actualizarContacto(distribuidoraId, contactoId, contacto);
         return new ResponseEntity<>(contactoActualizado, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{distribuidoraId}/contactos/{contactoId}")
+    @PreAuthorize("hasAnyRole('SYS', 'ADMIN')")
+    public ResponseEntity<String> eliminarContacto(@PathVariable(name = "contactoId") long id) {
+        contactoService.eliminarContacto(id);
+        return new ResponseEntity<>("Contacto eliminada con exito", HttpStatus.OK);
     }
 
 }

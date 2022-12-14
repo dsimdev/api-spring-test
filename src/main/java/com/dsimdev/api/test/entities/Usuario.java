@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,12 +19,16 @@ public class Usuario implements UserDetails {
     @Column(name = "id_usuario")
     private long id;
 
+    @NotNull
     private String username;
 
+    @NotNull
     private String password;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String perfil;
     private boolean enabled = true;
 
