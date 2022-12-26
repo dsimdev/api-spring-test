@@ -9,6 +9,7 @@ public interface DistribuidoraService {
     public Distribuidora crearDistribuidora(Distribuidora distribuidora);
 
     public List<Distribuidora> obtenerDistribuidoras();
+
     public Distribuidora obtenerDistribuidoraById(long id);
 
     public Distribuidora obtenerDistribuidoraByCodigoInterno(long codigoInterno);

@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v2/axum/distribuidoras")
+@RequestMapping("/api/v2/axum/usuarios/{username}/distribuidoras")
 @CrossOrigin("*")
 public class ModuloController {
 

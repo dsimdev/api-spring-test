@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,6 +44,10 @@ public class Usuario implements UserDetails {
     @JsonIgnore
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Distribuidora> distribuidoras = new HashSet<>();
+
     public Usuario() {
     }
 
@@ -66,6 +71,19 @@ public class Usuario implements UserDetails {
         this.creadoPor = creadoPor;
         this.enabled = enabled;
         this.usuarioRoles = usuarioRoles;
+    }
+
+    public Usuario(long id, String username, String password, String email, String perfil, String fechaInicio, String creadoPor, boolean enabled, Set<UsuarioRol> usuarioRoles, Set<Distribuidora> distribuidoras) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.perfil = perfil;
+        this.fechaInicio = fechaInicio;
+        this.creadoPor = creadoPor;
+        this.enabled = enabled;
+        this.usuarioRoles = usuarioRoles;
+        this.distribuidoras = distribuidoras;
     }
 
     public long getId() {
@@ -167,5 +185,13 @@ public class Usuario implements UserDetails {
 
     public void setCreadoPor(String creadoPor) {
         this.creadoPor = creadoPor;
+    }
+
+    public Set<Distribuidora> getDistribuidoras() {
+        return distribuidoras;
+    }
+
+    public void setDistribuidoras(Set<Distribuidora> distribuidoras) {
+        this.distribuidoras = distribuidoras;
     }
 }

@@ -45,8 +45,8 @@ public class UsuarioController {
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
         Rol rol = new Rol();
-        rol.setId(3L);
-        rol.setNombre("ROLE_USER");
+        rol.setId(2L);
+        rol.setNombre("ROLE_IMPL");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);

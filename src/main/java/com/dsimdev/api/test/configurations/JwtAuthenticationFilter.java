@@ -41,9 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }else{
-            System.out.println("Token invalido , no empieza con bearer string");
+            System.out.println("Token valido");
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){

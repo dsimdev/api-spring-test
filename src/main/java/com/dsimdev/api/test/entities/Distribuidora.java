@@ -1,8 +1,11 @@
 package com.dsimdev.api.test.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,27 +20,26 @@ public class Distribuidora {
     private long id;
 
     @Column(name = "codigo_interno", nullable = false)
-    @NotNull
     private long codigoInterno;
 
     @Column(name = "base", nullable = false)
-    @NotNull
+    @NotEmpty
     private String base;
 
     @Column(name = "razon_social", nullable = false)
-    @NotNull
+    @NotEmpty
     private String razonSocial;
 
     @Column(name = "erp", nullable = false)
-    @NotNull
+    @NotEmpty
     private String erp;
 
     @Column(name = "multinacional", nullable = false)
-    @NotNull
+    @NotEmpty
     private String multinacional;
 
     @Column(name = "estado", nullable = false)
-    @NotNull
+    @NotEmpty
     private String estado;
 
     @Column(name = "fecha_inicio")
@@ -53,6 +55,7 @@ public class Distribuidora {
     private String actualizadoPor;
 
     @Column(name = "vendedor")
+    @NotEmpty
     private String vendedor;
 
     @OneToMany(mappedBy = "distribuidora", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -63,6 +66,11 @@ public class Distribuidora {
 
     @OneToMany(mappedBy = "distribuidora", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Modulo> modulos = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id")
+    @JsonIgnore
+    private Usuario usuario;
 
     public Distribuidora() {
     }
@@ -121,6 +129,25 @@ public class Distribuidora {
         this.contactos = contactos;
         this.modulos = modulos;
         this.vendedor = vendedor;
+    }
+
+    public Distribuidora(long id, long codigoInterno, String base, String razonSocial, String erp, String multinacional, String estado, String fechaInicio, String creadoPor, String fechaActualizacion, String actualizadoPor, String vendedor, Set<Comentario> comentarios, Set<Contacto> contactos, Set<Modulo> modulos, Usuario usuario) {
+        this.id = id;
+        this.codigoInterno = codigoInterno;
+        this.base = base;
+        this.razonSocial = razonSocial;
+        this.erp = erp;
+        this.multinacional = multinacional;
+        this.estado = estado;
+        this.fechaInicio = fechaInicio;
+        this.creadoPor = creadoPor;
+        this.fechaActualizacion = fechaActualizacion;
+        this.actualizadoPor = actualizadoPor;
+        this.vendedor = vendedor;
+        this.comentarios = comentarios;
+        this.contactos = contactos;
+        this.modulos = modulos;
+        this.usuario = usuario;
     }
 
     public long getId() {
@@ -256,5 +283,13 @@ public class Distribuidora {
 
     public void setVendedor(String vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
